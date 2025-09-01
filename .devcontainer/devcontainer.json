@@ -1,0 +1,12 @@
+// .devcontainer/devcontainer.json
+// Configures a dev container that runs frontend and backend for testing.
+// Not used for production environments.
+{
+  "name": "rag-app-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [3000, 8000],
+  "postCreateCommand": "pip install -r backend/requirements.txt",
+  "postStartCommand": "sh -c 'uvicorn backend.app:app --host 0.0.0.0 --port 8000 & python -m http.server 3000 --directory frontend &'"
+}
