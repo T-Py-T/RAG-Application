@@ -2,8 +2,8 @@
 .env
 
 Allow .claude and .cursor to be shown
-.claude
-#.cursor
+#.claude
+.cursor
 
 # Python cache
 __pycache__/
