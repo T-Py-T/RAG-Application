@@ -1,0 +1,23 @@
+# Tech Stack
+
+- App Framework: Ruby on Rails 8.0+
+- Language: Ruby 3.2+
+- Primary Database: PostgreSQL 17+
+- ORM: Active Record
+- JavaScript Framework: React latest stable
+- Build Tool: Vite
+- Package Manager: npm
+- Node Version: 22 LTS
+- CSS Framework: TailwindCSS 4.0+
+- UI Components: Instrumental Components
+- Font Provider: Google Fonts (self-hosted)
+- Icons: Lucide React components
+- Application Hosting: Digital Ocean App Platform/Droplets
+- Database Hosting: Digital Ocean Managed PostgreSQL
+- Asset Storage: Amazon S3 with CloudFront CDN
+- CI/CD Platform: GitHub Actions
+- Third-Party Data APIs:
+  - Zillow & Realtor.com for valuations
+  - FBI Crime Data API
+  - Niche.com school ratings
+  - Local property tax and municipal debt sources (TBD)
