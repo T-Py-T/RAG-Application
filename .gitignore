@@ -1,8 +1,13 @@
-We need agent-os to give the system guide rails. 
-# .agent-os
-
-
-# Dont show local Environment Variables
+# Environment-specific files
 .env
+
+Allow .claude and .cursor to be shown
 .claude
-.cursor
+#.cursor
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Node.js dependencies
+node_modules/
