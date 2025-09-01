@@ -1,0 +1,8 @@
+We need agent-os to give the system guide rails. 
+# .agent-os
+
+
+# Dont show local Environment Variables
+.env
+.claude
+.cursor
