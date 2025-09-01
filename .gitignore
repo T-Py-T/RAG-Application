@@ -1,6 +1,8 @@
 # Environment-specific files
 .env
-.claude
+
+Allow .claude and .cursor to be shown
+#.claude
 .cursor
 
 # Python cache
