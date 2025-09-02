@@ -1,3 +1,7 @@
+# .github/workflows/compile.yml
+# This workflow compiles the backend and builds the Next.js frontend.
+# It replaces the old script check with a full Next.js build.
+
 name: Compile Checks
 
 on:
@@ -15,9 +19,14 @@ jobs:
           python-version: '3.x'
       - name: Compile backend
         run: python -m py_compile backend/app.py
+      # install Node and build the Next.js frontend
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - name: Check frontend
-        run: node --check frontend/script.js
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend

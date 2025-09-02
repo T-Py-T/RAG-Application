@@ -1,0 +1,7 @@
+/* frontend/styles/globals.css */
+/* Global styles with Tailwind directives. */
+/* Not for component-specific styling. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
