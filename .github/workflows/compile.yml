@@ -1,32 +1,107 @@
 # .github/workflows/compile.yml
-# This workflow compiles the backend and builds the Next.js frontend.
-# It replaces the old script check with a full Next.js build.
+# This workflow performs build checks for the RAG Application
+# Push triggers basic checks, PR triggers comprehensive checks
 
-name: Compile Checks
+name: Build Checks
 
 on:
   push:
+    branches: [ main, develop ]
   pull_request:
+    branches: [ main, develop ]
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.11'
 
 jobs:
-  build:
+  # Basic checks for push events
+  quick-check:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      # Backend basic check
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
-      - name: Compile backend
-        run: python -m py_compile backend/app.py
-      # install Node and build the Next.js frontend
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
         with:
-          node-version: '20'
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+      - name: Validate backend syntax
+        run: python -m py_compile backend/app.py
+
+      # Frontend basic build
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
         working-directory: frontend
       - name: Build frontend
         run: npm run build
+        working-directory: frontend
+
+  # Comprehensive checks for pull requests
+  comprehensive-check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      # Backend comprehensive checks
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+      - name: Validate backend syntax
+        run: python -m py_compile backend/app.py
+      - name: Check backend imports
+        run: python -c "import backend.app; print('Backend imports successful')"
+
+      # Frontend comprehensive checks
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+      - name: Run frontend linting
+        run: npm run lint
+        working-directory: frontend
+      - name: Check TypeScript types
+        run: npx tsc --noEmit
+        working-directory: frontend
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend
+      - name: Verify build output
+        run: ls -la .next
         working-directory: frontend

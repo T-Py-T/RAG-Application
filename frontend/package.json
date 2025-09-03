@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "setup-precommit": "npm install -g pre-commit && pre-commit install",
+    "precommit-install": "pre-commit install",
+    "precommit-run": "pre-commit run --all-files"
   },
   "dependencies": {
     "next": "^15.5.2",

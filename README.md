@@ -14,6 +14,39 @@ FastAPI is preferred for this project because its type hints, automatic document
 - Format Python code with `black` and follow PEP 8.
 - Format JavaScript with `prettier`.
 
+## Development Setup
+
+### Pre-commit Hooks
+
+This project uses [pre-commit](https://pre-commit.com/) to automatically run code quality checks before each commit.
+
+1. **Install pre-commit hooks:**
+   ```bash
+   # Option 1: Using the setup script (recommended)
+   ./setup-precommit.sh  # Linux/Mac
+   # or
+   setup-precommit.bat   # Windows
+
+   # Option 2: Manual installation
+   pip install pre-commit
+   pre-commit install
+   ```
+
+2. **Run checks manually:**
+   ```bash
+   pre-commit run --all-files
+   ```
+
+3. **Update hooks:**
+   ```bash
+   pre-commit autoupdate
+   ```
+
+The pre-commit hooks will automatically format your code and check for:
+- Python: Code formatting (black), import sorting (isort), linting (flake8), type checking (mypy)
+- JavaScript/TypeScript: Code formatting (prettier), linting (eslint)
+- General: Trailing whitespace, merge conflicts, large files, secrets detection
+
 ## Backend
 
 1. Install dependencies:
