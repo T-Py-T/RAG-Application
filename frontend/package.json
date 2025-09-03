@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "prettier --check .",
-    "setup-precommit": "npm install -g pre-commit && pre-commit install",
+    "setup-precommit": "pnpm add -g pre-commit && pre-commit install",
     "precommit-install": "pre-commit install",
     "precommit-run": "pre-commit run --all-files"
   },
