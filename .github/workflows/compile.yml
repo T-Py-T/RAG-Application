@@ -1,14 +1,13 @@
 # .github/workflows/compile.yml
 # This workflow performs build checks for the RAG Application
-# Push triggers basic checks, PR triggers comprehensive checks
+# Push triggers basic checks on all branches, PR triggers comprehensive checks on main/develop/staging
 
 name: Build Checks
 
 on:
   push:
-    branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, staging ]
 
 env:
   NODE_VERSION: '20'
