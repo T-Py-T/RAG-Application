@@ -10,12 +10,7 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": [
-    "echo '🚀 Setting up development environment...'",
-    "pip install -r backend/requirements.txt",
-    "cd frontend && pnpm install --frozen-lockfile",
-    "echo '✅ Environment setup complete!'"
-  ],
+  "postCreateCommand": ".devcontainer/setup.sh",
   "postStartCommand": "echo '🎯 Ready to develop! Backend: http://localhost:8000, Frontend: http://localhost:3000'",
   "customizations": {
     "vscode": {
