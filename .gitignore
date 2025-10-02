@@ -6,8 +6,10 @@
 .env
 
 Allow .claude and .cursor to be shown
-#.claude
+.claude
 .cursor
+.agent-os
+
 
 # Python cache
 __pycache__/
