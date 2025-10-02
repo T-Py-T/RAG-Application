@@ -429,7 +429,7 @@ export default function HomePage() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Explore Austin Neighborhoods</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              See real data and insights for popular Austin neighborhoods with our comprehensive analysis
+              See real data and insights for popular Austin neighborhoods with our full analysis
             </p>
           </div>
 
@@ -934,7 +934,7 @@ export default function HomePage() {
               Everything You Need to Evaluate Neighborhoods
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Get comprehensive insights from multiple data sources in one unified platform
+              Get full insights from multiple data sources in one unified platform
             </p>
           </div>
 
@@ -958,7 +958,7 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="text-lg">School Ratings</CardTitle>
                 <CardDescription>
-                  Comprehensive school district ratings and performance metrics from trusted sources
+                  full school district ratings and performance metrics from trusted sources
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -1013,7 +1013,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <CardDescription className="text-base">
-                  Navigate the complex home buying process with confidence. Get comprehensive neighborhood insights to
+                  Navigate the complex home buying process with confidence. Get full neighborhood insights to
                   find safe, affordable areas that match your lifestyle and budget.
                 </CardDescription>
               </CardHeader>

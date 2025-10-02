@@ -3,9 +3,8 @@
 // Not used for production environments.
 {
   "name": "rag-app-dev",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "rag-app",
   "forwardPorts": [3000, 8000],
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}

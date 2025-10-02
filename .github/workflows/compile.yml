@@ -1,5 +1,5 @@
 # .github/workflows/compile.yml
-# Fast checks for pushes, comprehensive checks for PRs targeting main branches
+# Fast checks for pushes, full checks for PRs targeting main branches
 
 name: Build Checks
 
@@ -36,8 +36,8 @@ jobs:
           fi
         working-directory: frontend
 
-  # Comprehensive validation for PRs to main branches
-  comprehensive-check:
+  # full validation for PRs to main branches
+  full-check:
     name: Full Validation Check
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'

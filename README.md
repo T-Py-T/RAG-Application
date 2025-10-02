@@ -24,10 +24,10 @@ A real estate discovery platform that solves the challenge of finding suitable n
 1. Open in VS Code
 2. Install Dev Containers extension
 3. Run: `Dev Containers: Reopen in Container`
-4. Container builds and installs dependencies automatically
-5. Backend and frontend ready at:
+4. Services start automatically:
    - Frontend: http://localhost:3000
    - Backend: http://localhost:8000
+   - API Docs: http://localhost:8000/docs
 
 ### Option 2: Local Development
 
@@ -56,11 +56,14 @@ pnpm dev
 
 ## Running the Application
 
-Once both servers are running:
+**Dev Container**: Services start automatically
+**Local**: Run both backend and frontend commands above
 
-1. Frontend: Open http://localhost:3000
-2. Backend API: Available at http://localhost:8000
-3. API Documentation: Visit http://localhost:8000/docs
+Access at:
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- API Docs: http://localhost:8000/docs
 
 ## Development Workflow
 
@@ -197,16 +200,19 @@ When the backend is running, visit:
 ### Common Issues
 
 Frontend won't start:
+
 ```bash
 cd frontend && rm -rf .next && pnpm dev
 ```
 
 Backend import errors:
+
 ```bash
 pip install -r backend/requirements.txt --force-reinstall
 ```
 
 Dev container issues:
+
 ```bash
 # In VS Code: Ctrl+Shift+P → "Dev Containers: Rebuild Container"
 ```
@@ -214,4 +220,3 @@ Dev container issues:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-

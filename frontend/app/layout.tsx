@@ -9,7 +9,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "HomeScope - Real Estate Insights Platform",
   description:
-    "Evaluate neighborhoods with comprehensive data on crime, schools, valuations, and tax trends. Make informed home buying decisions with HomeScope.",
+    "Evaluate neighborhoods with full data on crime, schools, valuations, and tax trends. Make informed home buying decisions with HomeScope.",
   generator: "v0.app",
 }
 

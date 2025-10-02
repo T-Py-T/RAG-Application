@@ -24,7 +24,7 @@ HomeScope is a real estate insights platform that helps home buyers evaluate nei
 - **Goals:** Identify high ROI areas; minimize risk
 
 ## The Problem
-Current property search platforms lack comprehensive insight into crime, school quality, and tax trends, forcing buyers to assemble data from many sources.
+Current property search platforms lack full insight into crime, school quality, and tax trends, forcing buyers to assemble data from many sources.
 
 ## Differentiators
 - Unified view of valuations, crime, schools, and tax metrics

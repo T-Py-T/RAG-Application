@@ -33,6 +33,15 @@ class Answer(BaseModel):
     answer: str
 
 
+@app.get("/")
+async def root():
+    """Root endpoint for health check."""
+    return {
+        "message": "RAG Application Backend is running!",
+        "docs": "http://localhost:8000/docs",
+    }
+
+
 @app.post("/ask", response_model=Answer)
 async def ask(query: Query) -> Answer:
     """Return the most relevant document using LangChain vector search."""

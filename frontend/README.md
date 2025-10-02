@@ -1,11 +1,11 @@
 # HomeScope - Real Estate Insights Platform
 
-HomeScope is a comprehensive real estate insights platform that helps home buyers and investors make informed decisions by providing detailed neighborhood analysis including crime data, school ratings, property valuations, tax trends, and demographic information.
+HomeScope is a full real estate insights platform that helps home buyers and investors make informed decisions by providing detailed neighborhood analysis including crime data, school ratings, property valuations, tax trends, and demographic information.
 
 ## Features
 
 - **Crime Analytics**: FBI crime statistics with neighborhood-level comparisons and safety scores
-- **School Ratings**: Comprehensive school district ratings and performance metrics
+- **School Ratings**: full school district ratings and performance metrics
 - **Property Valuations**: Aggregated home valuations from multiple sources with market trend analysis
 - **Tax Insights**: Property tax trends, municipal debt analysis, and affordability metrics
 - **Demographic Analysis**: Ethnic and religious composition data with diversity indices
