@@ -217,7 +217,7 @@ Use the project-manager subagent to create a structured summary message with emo
 </summary_sections>
 
 <instructions>
-  ACTION: Create comprehensive summary
+  ACTION: Create full summary
   INCLUDE: All required sections
   ADD: Conditional sections if applicable
   FORMAT: Use emoji headers for scannability
