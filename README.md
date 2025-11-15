@@ -216,7 +216,3 @@ Dev container issues:
 ```bash
 # In VS Code: Ctrl+Shift+P → "Dev Containers: Rebuild Container"
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
