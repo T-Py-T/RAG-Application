@@ -5,12 +5,15 @@
   "name": "rag-app-dev",
   "dockerComposeFile": "docker-compose.yml",
   "service": "rag-app",
-  "forwardPorts": [3000, 8000],
+  "forwardPorts": [3001, 8001],
+  "containerEnv": {
+    "COMPOSE_PROJECT_NAME": "rag-app"
+  },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "postCreateCommand": ".devcontainer/setup.sh",
-  "postStartCommand": "echo '🎯 Ready to develop! Backend: http://localhost:8000, Frontend: http://localhost:3000'",
+  "postStartCommand": "echo 'Ready to develop! Backend: http://localhost:8001, Frontend: http://localhost:3001'",
   "customizations": {
     "vscode": {
       "extensions": [

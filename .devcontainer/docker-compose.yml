@@ -2,18 +2,20 @@
 # Development environment for the RAG application
 # This file is used by the devcontainer to run both services
 
-version: "3.8"
+name: rag-app
 
 services:
   rag-app:
+    container_name: rag-app-devcontainer
+    image: rag-app-dev
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspaces/RAG-Application
     ports:
-      - "3000:3000"
-      - "8000:8000"
+      - "3001:3000"
+      - "8001:8000"
     environment:
       - PYTHONUNBUFFERED=1
       - NODE_ENV=development
