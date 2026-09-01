@@ -5,10 +5,7 @@
 name: Test and Security Scan
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   test-backend:
