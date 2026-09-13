@@ -1,12 +1,10 @@
-<!-- README.md -->
-<!-- Documents the implemented HomeScope prototype, local setup, tests, and limits. -->
-<!-- It does not claim live data, production deployment, users, benchmarks, or decision-grade accuracy. -->
-
 # HomeScope
 
-HomeScope is a local software prototype for exploring neighborhood-search interfaces. It lets a user filter eight
-synthetic Austin-area records by price, school rating, safety score, and walkability, then compare results as cards or
-on a simple coordinate map.
+HomeScope is an interactive neighborhood-search prototype for people exploring
+how housing preferences can be turned into useful, comparable results. It lets
+a user filter eight synthetic Austin-area records by price, school rating,
+safety score, and walkability, then compare the matches as cards or on a simple
+coordinate map.
 
 The project is for interface and retrieval experimentation. Its values are fixtures checked into this repository—not
 live market data—and must not be used for housing, financial, or investment decisions.
