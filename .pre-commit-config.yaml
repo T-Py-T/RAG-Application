@@ -3,19 +3,19 @@
 # It does not install Git hooks automatically or invoke any hosted workflow.
 repos:
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 26.5.1
     hooks:
       - id: black
         language_version: python3
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 9.0.1
     hooks:
       - id: isort
         args: ["--profile", "black"]
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.1.0
+    rev: 7.3.0
     hooks:
       - id: flake8
         args: ["--max-line-length=88", "--extend-ignore=E203,W503"]
@@ -30,7 +30,7 @@ repos:
         files: ^frontend/
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
@@ -40,10 +40,10 @@ repos:
         language: python
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
+    rev: v2.3.1
     hooks:
       - id: mypy
-        additional_dependencies: [fastapi==0.115.12]
+        additional_dependencies: [fastapi==0.141.1]
         files: ^backend/
         args: ["--ignore-missing-imports", "--strict"]
 
