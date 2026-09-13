@@ -1,2 +1,5 @@
-# Force LF for all files
+# .gitattributes
+# Keeps text files on LF while preserving binary screenshot and interface-image bytes.
+# It does not normalize or rewrite existing image history.
 * text eol=lf
+*.png binary

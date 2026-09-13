@@ -1,141 +1,77 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+// frontend/app/api/ai-search/route.ts
+// Parses a bounded set of search phrases and filters the local synthetic dataset.
+// It does not call external AI, housing, identity, or resident-data services.
+
+import { NextResponse, type NextRequest } from "next/server"
+import { DEMO_NEIGHBORHOODS, type Neighborhood } from "@/lib/neighborhoods"
+
+interface ParsedQuery {
+  location?: string
+  maxPrice?: number
+  minSafetyScore?: number
+  minSchoolRating?: number
+  minWalkScore?: number
+}
+
+function parseQuery(query: string): ParsedQuery {
+  const normalized = query.toLowerCase()
+  const parsed: ParsedQuery = {}
+  const priceMatch = normalized.match(/(?:under|below|less than)\s+\$?(\d+)(k)?/)
+
+  if (priceMatch) {
+    const amount = Number.parseInt(priceMatch[1], 10)
+    parsed.maxPrice = priceMatch[2] ? amount * 1000 : amount
+  }
+  if (normalized.includes("safe") || normalized.includes("low crime")) parsed.minSafetyScore = 8
+  if (normalized.includes("good school") || normalized.includes("excellent school")) parsed.minSchoolRating = 8
+  if (normalized.includes("walkable") || normalized.includes("walkability")) parsed.minWalkScore = 75
+
+  const locationMatch = normalized.match(/(?:in|near|around)\s+([a-z][a-z\s-]*)/)
+  if (locationMatch) parsed.location = locationMatch[1].trim()
+
+  return parsed
+}
+
+function matches(neighborhood: Neighborhood, query: ParsedQuery): boolean {
+  const location = query.location?.toLowerCase()
+  const matchesLocation =
+    !location ||
+    neighborhood.name.toLowerCase().includes(location) ||
+    neighborhood.city.toLowerCase().includes(location) ||
+    neighborhood.state.toLowerCase() === location
+
+  return (
+    matchesLocation &&
+    (!query.maxPrice || neighborhood.medianPrice <= query.maxPrice) &&
+    (!query.minSafetyScore || neighborhood.safetyScore >= query.minSafetyScore) &&
+    (!query.minSchoolRating || neighborhood.schoolRating >= query.minSchoolRating) &&
+    (!query.minWalkScore || neighborhood.walkScore >= query.minWalkScore)
+  )
+}
+
+function describeQuery(query: ParsedQuery): string {
+  const details: string[] = []
+  if (query.location) details.push(`location contains “${query.location}”`)
+  if (query.maxPrice) details.push(`price at or below $${query.maxPrice.toLocaleString("en-US")}`)
+  if (query.minSafetyScore) details.push(`safety score at least ${query.minSafetyScore}`)
+  if (query.minSchoolRating) details.push(`school rating at least ${query.minSchoolRating}`)
+  if (query.minWalkScore) details.push(`walk score at least ${query.minWalkScore}`)
+  return details.length > 0 ? `Applied: ${details.join(" · ")}` : "No supported filter phrase was found; showing all samples."
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const { query, filters } = await request.json()
-
-    // Simple AI-like query processing (in a real app, you'd use an LLM API)
-    const processedQuery = processNaturalLanguageQuery(query)
-
-    const supabase = await createClient()
-
-    // Build dynamic query based on processed natural language
-    let dbQuery = supabase.from("neighborhoods").select(`
-        *,
-        properties(count),
-        crime_data(year, crime_rate_per_1000),
-        schools(name, rating, type)
-      `)
-
-    // Apply AI-processed filters
-    if (processedQuery.maxPrice) {
-      dbQuery = dbQuery.lte("median_home_price", processedQuery.maxPrice)
+    const body: unknown = await request.json()
+    if (typeof body !== "object" || body === null || !("query" in body) || typeof body.query !== "string") {
+      return NextResponse.json({ error: "A text query is required." }, { status: 400 })
     }
 
-    if (processedQuery.minSafetyScore) {
-      dbQuery = dbQuery.gte("crime_score", processedQuery.minSafetyScore)
-    }
-
-    if (processedQuery.minSchoolRating) {
-      dbQuery = dbQuery.gte("school_rating", processedQuery.minSchoolRating)
-    }
-
-    if (processedQuery.location) {
-      dbQuery = dbQuery.or(`city.ilike.%${processedQuery.location}%,name.ilike.%${processedQuery.location}%`)
-    }
-
-    const { data: neighborhoods, error } = await dbQuery.limit(20)
-
-    if (error) {
-      console.error("Database error:", error)
-      return NextResponse.json({ error: "Failed to search neighborhoods" }, { status: 500 })
-    }
-
-    // Rank results based on AI analysis
-    const rankedResults = rankNeighborhoodsByQuery(neighborhoods || [], processedQuery)
-
+    const query = parseQuery(body.query)
     return NextResponse.json({
-      results: rankedResults,
-      interpretation: processedQuery.interpretation,
-      appliedFilters: processedQuery,
+      results: DEMO_NEIGHBORHOODS.filter((neighborhood) => matches(neighborhood, query)),
+      interpretation: describeQuery(query),
     })
-  } catch (error) {
-    console.error("AI search error:", error)
-    return NextResponse.json({ error: "Search failed" }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: "The request could not be parsed." }, { status: 400 })
   }
-}
-
-// Simple natural language processing (in production, use a proper LLM)
-function processNaturalLanguageQuery(query: string) {
-  const lowerQuery = query.toLowerCase()
-  const processed: any = {
-    interpretation: `Searching for: ${query}`,
-  }
-
-  // Extract price preferences
-  const priceMatch = lowerQuery.match(/under \$?(\d+)k?|below \$?(\d+)k?|less than \$?(\d+)k?/)
-  if (priceMatch) {
-    const price = Number.parseInt(priceMatch[1] || priceMatch[2] || priceMatch[3])
-    processed.maxPrice = price * (lowerQuery.includes("k") ? 1000 : 1)
-  }
-
-  // Extract safety preferences
-  if (lowerQuery.includes("safe") || lowerQuery.includes("low crime") || lowerQuery.includes("secure")) {
-    processed.minSafetyScore = 80
-    processed.interpretation += " • Prioritizing safety"
-  }
-
-  // Extract school preferences
-  if (lowerQuery.includes("good school") || lowerQuery.includes("education") || lowerQuery.includes("family")) {
-    processed.minSchoolRating = 7
-    processed.interpretation += " • Prioritizing schools"
-  }
-
-  // Extract location
-  const locationMatch = lowerQuery.match(/in ([a-zA-Z\s]+)|near ([a-zA-Z\s]+)|around ([a-zA-Z\s]+)/)
-  if (locationMatch) {
-    processed.location = locationMatch[1] || locationMatch[2] || locationMatch[3]
-  }
-
-  // Extract walkability preferences
-  if (lowerQuery.includes("walkable") || lowerQuery.includes("walk") || lowerQuery.includes("pedestrian")) {
-    processed.minWalkScore = 70
-    processed.interpretation += " • Prioritizing walkability"
-  }
-
-  return processed
-}
-
-function rankNeighborhoodsByQuery(neighborhoods: any[], query: any) {
-  return neighborhoods
-    .map((neighborhood) => {
-      let score = 0
-
-      // Score based on query preferences
-      if (query.minSafetyScore && neighborhood.crime_score >= query.minSafetyScore) {
-        score += 3
-      }
-
-      if (query.minSchoolRating && neighborhood.school_rating >= query.minSchoolRating) {
-        score += 3
-      }
-
-      if (query.maxPrice && neighborhood.median_home_price <= query.maxPrice) {
-        score += 2
-      }
-
-      if (query.minWalkScore && neighborhood.walkability_score >= query.minWalkScore) {
-        score += 2
-      }
-
-      return {
-        ...neighborhood,
-        aiScore: score,
-        highlights: generateHighlights(neighborhood, query),
-      }
-    })
-    .sort((a, b) => b.aiScore - a.aiScore)
-}
-
-function generateHighlights(neighborhood: any, query: any) {
-  const highlights = []
-
-  if (neighborhood.crime_score >= 85) highlights.push("Very Safe")
-  if (neighborhood.school_rating >= 8) highlights.push("Excellent Schools")
-  if (neighborhood.median_home_price < 400000) highlights.push("Affordable")
-  if (neighborhood.walkability_score >= 80) highlights.push("Very Walkable")
-  if (neighborhood.property_tax_rate < 0.02) highlights.push("Low Taxes")
-
-  return highlights
 }

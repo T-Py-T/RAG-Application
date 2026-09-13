@@ -1,0 +1,7 @@
+# frontend/pnpm-workspace.yaml
+# Allows native build scripts already locked for the local Next.js toolchain.
+# It does not add packages, workspaces, or runtime services.
+allowBuilds:
+  '@tailwindcss/oxide': true
+  esbuild: true
+  sharp: true
