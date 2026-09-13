@@ -1,3 +1,7 @@
+// frontend/app/auth/login/page.tsx
+// Renders the existing prototype password sign-in surface with the current Supabase API.
+// It does not configure authentication providers or promise a deployed account system.
+
 "use client"
 
 import type React from "react"
@@ -12,9 +16,15 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { MapPin, Eye, EyeOff, Mail, Lock } from "lucide-react"
 import Link from "next/link"
 
+interface LoginFormData {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
     rememberMe: false,
@@ -33,9 +43,6 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
-        options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
-        },
       })
       if (error) throw error
       router.push("/dashboard")
@@ -46,7 +53,7 @@ export default function LoginPage() {
     }
   }
 
-  const updateFormData = (key: string, value: any) => {
+  const updateFormData = <Key extends keyof LoginFormData>(key: Key, value: LoginFormData[Key]) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
@@ -123,7 +130,7 @@ export default function LoginPage() {
                   <Checkbox
                     id="remember"
                     checked={formData.rememberMe}
-                    onCheckedChange={(checked) => updateFormData("rememberMe", checked)}
+                    onCheckedChange={(checked) => updateFormData("rememberMe", checked === true)}
                   />
                   <Label htmlFor="remember" className="text-sm cursor-pointer">
                     Remember me

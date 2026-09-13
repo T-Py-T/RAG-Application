@@ -1,3 +1,7 @@
+// frontend/app/layout.tsx
+// Defines shared document metadata and layout for the local HomeScope prototype.
+// It does not advertise production readiness or live housing intelligence.
+
 import type React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
@@ -7,10 +11,8 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "HomeScope - Real Estate Insights Platform",
-  description:
-    "Evaluate neighborhoods with full data on crime, schools, valuations, and tax trends. Make informed home buying decisions with HomeScope.",
-  generator: "v0.app",
+  title: "HomeScope · Synthetic neighborhood search prototype",
+  description: "Explore a local software prototype for filtering and comparing synthetic neighborhood records.",
 }
 
 export default function RootLayout({
