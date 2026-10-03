@@ -120,7 +120,3 @@ checks; it has no push, schedule, or manual trigger.
 Do not commit credentials or personal data. Use the private reporting route in [SECURITY.md](SECURITY.md) for a
 suspected vulnerability. See [LICENSE](LICENSE) for the MIT license.
 
-## Discoverability
-
-For a short skills-and-links index (suggested GitHub topics, doc map, revision cite), see
-[docs/HIREABILITY.md](docs/HIREABILITY.md).
