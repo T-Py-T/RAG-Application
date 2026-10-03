@@ -40,7 +40,6 @@ There is no bug bounty, paid reward, or guaranteed response timeline.
 ## Related documentation
 
 - [README.md](README.md) — architecture, run and validate instructions, limitations
-- [docs/HIREABILITY.md](docs/HIREABILITY.md) — short reviewer and discoverability index
 - [LICENSE](LICENSE) — MIT terms
 
 **Revision cited:** `07fc403` (current `main` tip at open); alignment for this documentation packet may resolve when
