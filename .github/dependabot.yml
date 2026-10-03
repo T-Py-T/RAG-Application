@@ -3,7 +3,7 @@
 # It does not assert READY status, production posture, or automatic merge approval.
 
 # Tip-cite: in PR descriptions, lead with an 8-character `main` tip prefix plus this PR number
-# (example shape: `66585fea` + `#NNN`). A cited tip is alignment metadata only — tip ≠ READY.
+# (example shape: `66585fea` + `#NNN`).
 # Do not invent READY, certification, or deployed-security claims in Dependabot or manual bumps.
 # Revision cited at open: `66585fea` (current `main` tip); Steward alignment for this packet may
 # resolve when this pull request merges. See CONTRIBUTING.md and SECURITY.md for human PR scope.

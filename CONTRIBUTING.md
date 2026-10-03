@@ -23,8 +23,7 @@ public issue.
 
 ## Related documentation
 
-- [.github/dependabot.yml](.github/dependabot.yml) — scheduled dependency updates; tip-cite guidance (tip ≠ READY)
-- [docs/HIREABILITY.md](docs/HIREABILITY.md) — skills-and-links index for reviewers
+- [.github/dependabot.yml](.github/dependabot.yml) — scheduled dependency updates
 - [SECURITY.md](SECURITY.md) — vulnerability reporting and scope
 - [LICENSE](LICENSE) — MIT terms
 
